@@ -20,16 +20,16 @@ module BoardChecks
   end
 
   def diag_check(board, value)
-    if board[0] + board[4] + board[8] == value * 3 || board[2] + board[4] + board[6] == value * 3
+    return unless board[0] + board[4] + board[8] == value * 3 || board[2] + board[4] + board[6] == value * 3
       puts "#{value} has won"
-      true
+    
     end
   end
 
   def full_board_check(board, _value)
-    unless board.include?(' ') 
+    return if board.include?(' ')
       puts "That's a tie!"
-      true
+      
     end
   end
 end
