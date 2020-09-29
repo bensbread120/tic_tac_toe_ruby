@@ -5,7 +5,7 @@ require_relative 'inputs_module.rb'
 
 class Board
   include BoardChecks
-  include Inputs
+
   attr_accessor :board_elements
   def initialize
     @board_elements = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
@@ -13,13 +13,13 @@ class Board
 
   def print_board
     b = @board_elements
-    puts '#############'
-    puts '# ' + b[0] + ' | ' + b[1] + ' | ' + b[2] + ' #'
-    puts '#-----------#'
-    puts '# ' + b[3] + ' | ' + b[4] + ' | ' + b[5] + ' #'
-    puts '#-----------#'
-    puts '# ' + b[6] + ' | ' + b[7] + ' | ' + b[8] + ' #'
-    puts '#############'
+    puts "#############\n" \
+         '# ' + b[0] + ' | ' + b[1] + ' | ' + b[2] + " #\n" \
+         "#-----------#\n" \
+         '# ' + b[3] + ' | ' + b[4] + ' | ' + b[5] + " #\n" \
+         "#-----------#\n" \
+         '# ' + b[6] + ' | ' + b[7] + ' | ' + b[8] + " #\n" \
+         '#############'
   end
 
   def change_board(sector, value)
@@ -34,9 +34,12 @@ class Board
 
   def check_board(value)
     board = @board_elements
-    [vert_check(board, value),
-     horz_check(board, value),
-     diag_check(board, value),
-     full_board_check(board, value)].include?(true)
+    if [vert_check(board, value), horz_check(board, value), diag_check(board, value)].include?(true)
+      puts "player #{value} has won"
+      true
+    elsif full_board_check(board)
+      puts 'thats a tie'
+      true
+    end
   end
 end
