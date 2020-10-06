@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'shared.rb'
+require_relative 'player_input.rb'
 require_relative 'board.rb'
 # Game class is used mostly to take user input and direct valid inputs into board object
 class Game < Board
-  include Shared
+  include PlayerInput
   def initialize
     @new_board = Board.new
   end
