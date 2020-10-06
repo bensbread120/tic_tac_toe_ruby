@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'shared.rb'
+require_relative 'player_input.rb'
 # Board class creates an array that can be modified by users through the game object,
 # array is manipulated into board after each interaction
 class Board
-  include Shared
+  include PlayerInput
   attr_accessor :board
   BOARD_SIZE = 3
   BOARD_SIZE_SQRD = BOARD_SIZE * BOARD_SIZE
