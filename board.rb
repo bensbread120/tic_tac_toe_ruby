@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'printer.rb'
+require_relative 'shared.rb'
 # Board class creates an array that can be modified by users through the game object,
 # array is manipulated into board after each interaction
 class Board
-
+  include Shared
   attr_accessor :board
   BOARD_SIZE = 3
   BOARD_SIZE_SQRD = BOARD_SIZE * BOARD_SIZE
@@ -12,6 +12,30 @@ class Board
   def initialize
     @board = Array.new(BOARD_SIZE_SQRD, ' ')
   end
+
+  def change_board(sector, value)
+    if @board[sector] == ' '
+      @board[sector] = value
+      print_board
+    else
+      puts 'That sector has been chosen already, choose again'
+      change_board(int_within_board(BOARD_SIZE_SQRD), value)
+    end
+  end
+
+  def check_board(value)
+    if [vert_check(@board, value), horz_check(@board, value), diag_check(@board, value)].include?(true)
+      puts "player #{value} has won"
+      clear_board
+      true
+    elsif full_board_check(@board)
+      puts 'thats a tie'
+      clear_board
+      true
+    end
+  end
+
+  private
 
   def print_board
     x = 0
@@ -24,16 +48,6 @@ class Board
       else
         puts '#' + '-' * (BOARD_SIZE * 4 - 1) + '#'
       end
-    end
-  end
-
-  def change_board(sector, value)
-    if @board[sector] == ' '
-      @board[sector] = value
-      print_board
-    else
-      puts 'That sector has been chosen already, choose again'
-      change_board(gets.chomp.to_i, value)
     end
   end
 
@@ -84,15 +98,5 @@ class Board
 
   def full_board_check(board)
     !board.include?(' ')
-  end
-
-  def check_board(value)
-    if [vert_check(@board, value), horz_check(@board, value), diag_check(@board, value)].include?(true)
-      puts "player #{value} has won"
-      true
-    elsif full_board_check(@board)
-      puts 'thats a tie'
-      true
-    end
   end
 end
